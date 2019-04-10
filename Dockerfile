@@ -16,7 +16,6 @@ WORKDIR /opt/mqttwarn
 # add user mqttwarn to image
 RUN groupadd -r mqttwarn
 RUN useradd -r -g mqttwarn mqttwarn
-RUN mkdir /opt/mqttwarn
 RUN chown -R mqttwarn /opt/mqttwarn
 
 # process run as mqttwarn user
