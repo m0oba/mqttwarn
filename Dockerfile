@@ -1,7 +1,11 @@
-FROM python:2.7
+FROM  balenalib/rpi-debian
+
+RUN apt-get update && apt-get install -y \
+    python \
+    python-pip \
+    python-setuptools
 
 # based on https://github.com/pfichtner/docker-mqttwarn
-
 # install python libraries (TODO: any others?)
 RUN pip install paho-mqtt requests jinja2
 
@@ -10,7 +14,9 @@ RUN mkdir -p /opt/mqttwarn
 WORKDIR /opt/mqttwarn
 
 # add user mqttwarn to image
-RUN groupadd -r mqttwarn && useradd -r -g mqttwarn mqttwarn
+RUN groupadd -r mqttwarn
+RUN useradd -r -g mqttwarn mqttwarn
+RUN mkdir /opt/mqttwarn
 RUN chown -R mqttwarn /opt/mqttwarn
 
 # process run as mqttwarn user
@@ -28,4 +34,3 @@ COPY . /opt/mqttwarn
 
 # run process
 CMD python mqttwarn.py
-
